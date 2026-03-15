@@ -1,13 +1,13 @@
 @use '../../../../styles/mixins' as *;
 
 .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+  grid-template-columns: 1fr;
 
-  @include respond-to(sm) {
-    grid-template-columns: 1fr;
+  @include respond-to(md) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 }
 

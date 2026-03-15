@@ -72,7 +72,6 @@ export class Profile implements OnInit {
     this.loading.set(true);
     const raw = this.form.getRawValue();
 
-    // Solo enviar password si fue llenado
     const data = raw.password
       ? raw
       : {

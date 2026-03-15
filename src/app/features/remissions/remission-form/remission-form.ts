@@ -113,7 +113,6 @@ export class RemissionForm implements OnInit {
       return;
     }
 
-    // Validar que cada item tenga al menos una property con cantidad > 0
     const hasEmptyRows = this.rows().some((row) => row.total_quantity === 0);
     if (hasEmptyRows) {
       this.messageService.add({

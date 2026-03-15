@@ -1,5 +1,5 @@
 <div class="layout" [class.layout--collapsed]="sidebarCollapsed()">
-  <app-sidebar [collapsed]="sidebarCollapsed()" />
+  <app-sidebar [collapsed]="sidebarCollapsed()" (navigate)="onSidebarNavigate()" />
   <div class="layout__main">
     <app-topbar (toggleSidebar)="toggleSidebar()" />
     <main class="layout__content">
