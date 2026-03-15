@@ -19,7 +19,7 @@ import { UserService } from '../../../core/services/user.service';
     InputTextModule,
     CardModule,
     MessageModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',

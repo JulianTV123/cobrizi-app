@@ -6,7 +6,7 @@ import { UserService } from '../../../core/services/user.service';
   selector: 'app-topbar',
   standalone: true,
   templateUrl: './topbar.html',
-  styleUrl: './topbar.scss'
+  styleUrl: './topbar.scss',
 })
 export class Topbar implements OnInit {
   private readonly authService = inject(AuthService);
@@ -17,7 +17,7 @@ export class Topbar implements OnInit {
   protected readonly userName = signal<string>('');
 
   ngOnInit(): void {
-    this.userService.getMyProfile().subscribe(user => {
+    this.userService.getMyProfile().subscribe((user) => {
       this.userName.set(user.name);
       this.authService.setCurrentUser(user);
     });

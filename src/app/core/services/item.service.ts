@@ -2,7 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_ENDPOINTS } from '../../shared/constants';
-import { IItem, IItemCreate, IItemUpdate, IItemProperty, IItemPropertyCreate } from '../../shared/interfaces';
+import {
+  IItem,
+  IItemCreate,
+  IItemUpdate,
+  IItemProperty,
+  IItemPropertyCreate,
+} from '../../shared/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class ItemService {

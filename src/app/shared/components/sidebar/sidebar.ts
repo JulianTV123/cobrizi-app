@@ -1,12 +1,8 @@
 import { Component, inject, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-
-interface NavItem {
-  label: string;
-  icon: string;
-  route: string;
-}
+import { NavItem } from '../../interfaces/sidebar.interface';
+import { version } from '../../../../../package.json';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +13,7 @@ interface NavItem {
 })
 export class Sidebar {
   private readonly authService = inject(AuthService);
-
+  protected version = version;
   readonly collapsed = input<boolean>(false);
 
   protected readonly navItems: NavItem[] = [

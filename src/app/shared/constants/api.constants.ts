@@ -18,7 +18,8 @@ export const API_ENDPOINTS = {
     base: `${API_URL}/items`,
     byId: (id: number) => `${API_URL}/items/${id}`,
     properties: (itemId: number) => `${API_URL}/items/${itemId}/properties`,
-    propertyById: (itemId: number, propId: number) => `${API_URL}/items/${itemId}/properties/${propId}`,
+    propertyById: (itemId: number, propId: number) =>
+      `${API_URL}/items/${itemId}/properties/${propId}`,
   },
   invoices: {
     base: `${API_URL}/invoices`,
@@ -31,5 +32,5 @@ export const API_ENDPOINTS = {
     byId: (id: number) => `${API_URL}/remissions/${id}`,
     pdf: (id: number) => `${API_URL}/remissions/${id}/pdf`,
     send: (id: number) => `${API_URL}/remissions/${id}/send`,
-  }
+  },
 } as const;

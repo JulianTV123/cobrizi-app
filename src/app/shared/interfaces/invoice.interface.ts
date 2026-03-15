@@ -1,3 +1,5 @@
+import { IItem } from './item.interface';
+
 export interface IInvoiceItem {
   id: number;
   item_id: number;
@@ -17,6 +19,14 @@ export interface IInvoice {
   items: IInvoiceItem[];
 }
 
+export interface InvoiceRow {
+  item: IItem;
+  quantity: number;
+  unit_price: number;
+}
+
 export type IInvoiceItemCreate = Pick<IInvoiceItem, 'item_id' | 'quantity' | 'unit_price'>;
-export type IInvoiceCreate = Pick<IInvoice, 'date' | 'user_associate_id'> & { items: IInvoiceItemCreate[] };
+export type IInvoiceCreate = Pick<IInvoice, 'date' | 'user_associate_id'> & {
+  items: IInvoiceItemCreate[];
+};
 export type IInvoiceUpdate = Partial<Pick<IInvoice, 'date' | 'status'>>;

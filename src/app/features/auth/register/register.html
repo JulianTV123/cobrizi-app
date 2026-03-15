@@ -74,7 +74,9 @@
             id="passwordConfirm"
             type="password"
             formControlName="passwordConfirm"
-            [class.ng-invalid]="form.get('passwordConfirm')?.invalid && form.get('passwordConfirm')?.touched"
+            [class.ng-invalid]="
+              form.get('passwordConfirm')?.invalid && form.get('passwordConfirm')?.touched
+            "
           />
         </div>
       </div>

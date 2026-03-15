@@ -1,14 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
   <div class="form-grid">
-
     <div class="field">
       <label for="name" class="field__label">Nombre completo *</label>
-      <input
-        pInputText
-        id="name"
-        formControlName="name"
-        placeholder="Juan Pérez"
-      />
+      <input pInputText id="name" formControlName="name" placeholder="Juan Pérez" />
       @if (form.get('name')?.invalid && form.get('name')?.touched) {
         <small class="p-error">Nombre requerido (mínimo 3 caracteres)</small>
       }
@@ -16,32 +10,17 @@
 
     <div class="field">
       <label for="id_number" class="field__label">Cédula</label>
-      <input
-        pInputText
-        id="id_number"
-        formControlName="id_number"
-        placeholder="12345678"
-      />
+      <input pInputText id="id_number" formControlName="id_number" placeholder="12345678" />
     </div>
 
     <div class="field">
       <label for="phone" class="field__label">Teléfono</label>
-      <input
-        pInputText
-        id="phone"
-        formControlName="phone"
-        placeholder="300 123 4567"
-      />
+      <input pInputText id="phone" formControlName="phone" placeholder="300 123 4567" />
     </div>
 
     <div class="field">
       <label for="email" class="field__label">Email</label>
-      <input
-        pInputText
-        id="email"
-        formControlName="email"
-        placeholder="juan@example.com"
-      />
+      <input pInputText id="email" formControlName="email" placeholder="juan@example.com" />
       @if (form.get('email')?.invalid && form.get('email')?.touched) {
         <small class="p-error">Email inválido</small>
       }
@@ -57,7 +36,6 @@
         placeholder="Calle 123 #45-67, Bogotá"
       ></textarea>
     </div>
-
   </div>
 
   <div class="form-actions">

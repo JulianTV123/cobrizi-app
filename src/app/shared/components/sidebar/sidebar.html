@@ -1,9 +1,9 @@
 <aside class="sidebar" [class.sidebar--collapsed]="collapsed()">
   <div class="sidebar__brand">
     @if (!collapsed()) {
-      <span class="sidebar__brand-text">Cobrizi</span>
+      <img src="assets/images/app-logo.png" alt="Cobrizi" class="sidebar__brand-logo" />
     } @else {
-      <span class="sidebar__brand-icon">CB</span>
+      <img src="assets/images/app-icon.png" alt="Cobrizi" class="sidebar__brand-logo--icon" />
     }
   </div>
 
@@ -35,5 +35,10 @@
         <span>Cerrar sesión</span>
       }
     </button>
+    <div class="sidebar__nav-item">
+      @if (!collapsed()) {
+        <span> Cobrizi Version &nbsp;{{ version }} </span>
+      }
+    </div>
   </div>
 </aside>
