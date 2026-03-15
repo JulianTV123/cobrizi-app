@@ -22,17 +22,17 @@
 
 @mixin respond-to($breakpoint) {
   @if $breakpoint == 'sm' {
-    @media (max-width: 640px) {
+    @media (min-width: 640px) {
       @content;
     }
   }
   @if $breakpoint == 'md' {
-    @media (max-width: 768px) {
+    @media (min-width: 768px) {
       @content;
     }
   }
   @if $breakpoint == 'lg' {
-    @media (max-width: 1024px) {
+    @media (min-width: 1024px) {
       @content;
     }
   }

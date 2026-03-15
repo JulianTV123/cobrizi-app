@@ -16,4 +16,8 @@ export class Layout {
   protected toggleSidebar(): void {
     this.sidebarCollapsed.update((v) => !v);
   }
+
+  protected onSidebarNavigate(): void {
+    this.sidebarCollapsed.set(true);
+  }
 }

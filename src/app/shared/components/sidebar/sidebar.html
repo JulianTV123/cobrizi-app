@@ -13,6 +13,7 @@
         class="sidebar__nav-item"
         [routerLink]="item.route"
         routerLinkActive="sidebar__nav-item--active"
+        (click)="onNavClick()"
       >
         <i [class]="item.icon"></i>
         @if (!collapsed()) {
@@ -23,7 +24,7 @@
   </nav>
 
   <div class="sidebar__footer">
-    <a class="sidebar__nav-item" routerLink="/profile" routerLinkActive="sidebar__nav-item--active">
+    <a class="sidebar__nav-item" routerLink="/profile" routerLinkActive="sidebar__nav-item--active" (click)="onNavClick()">
       <i class="pi pi-user"></i>
       @if (!collapsed()) {
         <span>Mi perfil</span>
