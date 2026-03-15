@@ -21,26 +21,26 @@
   }
 
   &__stats {
-    @include flex(row, stretch, flex-start, var(--space-lg));
-    margin-bottom: var(--space-2xl);
-    gap: var(--space-lg);
+    @include flex(column, stretch, flex-start, var(--space-lg));
 
-    @include respond-to(sm) {
-      @include flex(column, stretch, flex-start, var(--space-lg));
+    @include respond-to(md) {
+      @include flex(row, stretch, flex-start, var(--space-lg));
+      margin-bottom: var(--space-2xl);
+      gap: var(--space-lg);
     }
   }
 
   &__actions {
-    @include flex(row, center, center, var(--space-lg));
-    gap: var(--space-lg);
-    flex-wrap: wrap;
-    padding: var(--space-lg);
-    justify-content: left;
+    @include flex(column, center, center, var(--space-lg));
+    width: 100%;
+    max-width: 300px;
 
-    @include respond-to(sm) {
-      @include flex(column, center, center, var(--space-lg));
-      width: 100%;
-      max-width: 300px;
+    @include respond-to(md) {
+      @include flex(row, center, center, var(--space-lg));
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+      padding: var(--space-lg);
+      justify-content: left;
     }
   }
 }

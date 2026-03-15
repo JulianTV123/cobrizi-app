@@ -34,9 +34,7 @@ export class ItemForm implements OnInit {
   protected readonly addingProperty = signal(false);
   protected readonly item = computed(() => this.config.data?.item as IItem | undefined);
 
-  // Para crear: lista local de properties
   protected readonly localProperties = signal<string[]>([]);
-  // Para editar: properties del servidor
   protected readonly properties = signal<IItemProperty[]>([]);
 
   protected readonly newPropertyName = signal('');
@@ -56,8 +54,6 @@ export class ItemForm implements OnInit {
     }
   }
 
-  // ── Crear: manejo local ──────────────────────────────
-
   protected addLocalProperty(): void {
     const name = this.newPropertyName().trim();
     if (!name) return;
@@ -68,8 +64,6 @@ export class ItemForm implements OnInit {
   protected removeLocalProperty(index: number): void {
     this.localProperties.update((props) => props.filter((_, i) => i !== index));
   }
-
-  // ── Editar: manejo contra API ────────────────────────
 
   protected addProperty(): void {
     const name = this.newPropertyName().trim();
@@ -94,8 +88,6 @@ export class ItemForm implements OnInit {
     });
   }
 
-  // ── Submit ───────────────────────────────────────────
-
   protected onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -106,7 +98,6 @@ export class ItemForm implements OnInit {
     const { name, description } = this.form.getRawValue();
 
     if (this.item()) {
-      // Editar — solo nombre/descripción, properties se manejan en tiempo real
       this.itemService.update(this.item()!.id, { name, description }).subscribe({
         next: () => {
           this.messageService.add({
@@ -119,7 +110,6 @@ export class ItemForm implements OnInit {
         error: () => this.loading.set(false),
       });
     } else {
-      // Crear — enviamos con properties locales
       this.itemService
         .create({
           name,
