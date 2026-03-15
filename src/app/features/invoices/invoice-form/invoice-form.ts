@@ -11,13 +11,7 @@ import { MessageService } from 'primeng/api';
 import { InvoiceService } from '../../../core/services/invoice.service';
 import { AssociateService } from '../../../core/services/associate.service';
 import { ItemService } from '../../../core/services/item.service';
-import { IAssociate, IItem, IInvoiceItemCreate } from '../../../shared/interfaces';
-
-interface InvoiceRow {
-  item: IItem;
-  quantity: number;
-  unit_price: number;
-}
+import { IAssociate, IItem, IInvoiceItemCreate, InvoiceRow } from '../../../shared/interfaces';
 
 @Component({
   selector: 'app-invoice-form',
