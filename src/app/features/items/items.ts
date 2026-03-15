@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ItemService } from '../../core/services/item.service';
 import { ItemForm } from './item-form/item-form';
 import { IItem } from '../../shared/interfaces';
+import { defaultDialogConfig } from '../../shared/utils/dialog.config';
 
 @Component({
   selector: 'app-items',
@@ -37,7 +38,7 @@ export class Items implements OnInit {
   protected loadItems(): void {
     this.loading.set(true);
     this.itemService.getAll().subscribe({
-      next: items => {
+      next: (items) => {
         this.items.set(items);
         this.loading.set(false);
       },
@@ -47,13 +48,10 @@ export class Items implements OnInit {
 
   protected openForm(item: IItem | null = null): void {
     this.ref.set(
-      this.dialogService.open(ItemForm, {
-        header: item ? 'Editar Artículo' : 'Nuevo Artículo',
-        width: '45vw',
-        contentStyle: { 'max-height': '90vh', overflow: 'auto' },
-        baseZIndex: 10000,
-        data: { item },
-      })
+      this.dialogService.open(
+        ItemForm,
+        defaultDialogConfig(item ? 'Editar Artículo' : 'Nuevo Artículo', { item }),
+      ),
     );
 
     this.ref()?.onClose.subscribe(() => this.loadItems());
@@ -74,7 +72,7 @@ export class Items implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary: 'Éxito',
-              detail: `"${item.name}" eliminado correctamente`
+              detail: `"${item.name}" eliminado correctamente`,
             });
             this.loadItems();
           },
@@ -82,9 +80,9 @@ export class Items implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'No se pudo eliminar el artículo'
+              detail: 'No se pudo eliminar el artículo',
             });
-          }
+          },
         });
       },
     });

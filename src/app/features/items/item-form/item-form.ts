@@ -61,12 +61,12 @@ export class ItemForm implements OnInit {
   protected addLocalProperty(): void {
     const name = this.newPropertyName().trim();
     if (!name) return;
-    this.localProperties.update(props => [...props, name]);
+    this.localProperties.update((props) => [...props, name]);
     this.newPropertyName.set('');
   }
 
   protected removeLocalProperty(index: number): void {
-    this.localProperties.update(props => props.filter((_, i) => i !== index));
+    this.localProperties.update((props) => props.filter((_, i) => i !== index));
   }
 
   // ── Editar: manejo contra API ────────────────────────
@@ -77,8 +77,8 @@ export class ItemForm implements OnInit {
 
     this.addingProperty.set(true);
     this.itemService.addProperty(this.item()!.id, { name }).subscribe({
-      next: prop => {
-        this.properties.update(props => [...props, prop]);
+      next: (prop) => {
+        this.properties.update((props) => [...props, prop]);
         this.newPropertyName.set('');
         this.addingProperty.set(false);
       },
@@ -89,8 +89,8 @@ export class ItemForm implements OnInit {
   protected deleteProperty(prop: IItemProperty): void {
     this.itemService.deleteProperty(this.item()!.id, prop.id).subscribe({
       next: () => {
-        this.properties.update(props => props.filter(p => p.id !== prop.id));
-      }
+        this.properties.update((props) => props.filter((p) => p.id !== prop.id));
+      },
     });
   }
 
@@ -109,24 +109,34 @@ export class ItemForm implements OnInit {
       // Editar — solo nombre/descripción, properties se manejan en tiempo real
       this.itemService.update(this.item()!.id, { name, description }).subscribe({
         next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Artículo actualizado' });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Artículo actualizado',
+          });
           this.ref.close();
         },
         error: () => this.loading.set(false),
       });
     } else {
       // Crear — enviamos con properties locales
-      this.itemService.create({
-        name,
-        description,
-        properties: this.localProperties().map(n => ({ name: n })),
-      }).subscribe({
-        next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Artículo creado' });
-          this.ref.close();
-        },
-        error: () => this.loading.set(false),
-      });
+      this.itemService
+        .create({
+          name,
+          description,
+          properties: this.localProperties().map((n) => ({ name: n })),
+        })
+        .subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Éxito',
+              detail: 'Artículo creado',
+            });
+            this.ref.close();
+          },
+          error: () => this.loading.set(false),
+        });
     }
   }
 

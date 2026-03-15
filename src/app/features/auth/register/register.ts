@@ -19,10 +19,10 @@ import { MessageModule } from 'primeng/message';
     CardModule,
     InputTextModule,
     ButtonModule,
-    MessageModule
+    MessageModule,
   ],
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrl: './register.scss',
 })
 export class Register {
   private readonly fb = inject(FormBuilder);
@@ -39,7 +39,7 @@ export class Register {
     phone: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    passwordConfirm: ['', [Validators.required]]
+    passwordConfirm: ['', [Validators.required]],
   });
 
   protected onSubmit(): void {
@@ -65,7 +65,7 @@ export class Register {
       address,
       phone,
       email,
-      password
+      password,
     };
 
     this.authService.register(payload).subscribe({
@@ -76,7 +76,7 @@ export class Register {
       error: () => {
         this.loading.set(false);
         this.error.set('No se pudo crear el usuario. Intenta con otro email.');
-      }
+      },
     });
   }
 }

@@ -9,6 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AssociateService } from '../../core/services/associate.service';
 import { AssociateForm } from './associate-form/associate-form';
 import { IAssociate } from '../../shared/interfaces';
+import { defaultDialogConfig } from '../../shared/utils/dialog.config';
 
 @Component({
   selector: 'app-associates',
@@ -48,20 +49,16 @@ export class Associates implements OnInit {
 
   protected openForm(associate: IAssociate | null = null): void {
     this.selectedAssociate.set(associate);
-    this.ref.set(
-      this.dialogService.open(AssociateForm, {
-        header: associate ? 'Editar Asociado' : 'Nuevo Asociado',
-        width: '45vw',
-        contentStyle: { 'max-height': '90vh', overflow: 'auto' },
-        baseZIndex: 10000,
-        data: { associate },
-      }),
-    );
-
-    this.ref()?.onClose.subscribe(() => {
-      this.loadAssociates();
-      this.selectedAssociate.set(null);
-    });
+    (this.ref.set(
+      this.dialogService.open(
+        AssociateForm,
+        defaultDialogConfig(associate ? 'Editar Asociado' : 'Nuevo Asociado', { associate }),
+      ),
+    ),
+      this.ref()?.onClose.subscribe(() => {
+        this.loadAssociates();
+        this.selectedAssociate.set(null);
+      }));
   }
 
   protected deleteAssociate(associate: IAssociate): void {

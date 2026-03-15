@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { InvoiceService } from '../../core/services/invoice.service';
 import { InvoiceForm } from './invoice-form/invoice-form';
 import { IInvoice } from '../../shared/interfaces';
+import { defaultDialogConfig } from '../../shared/utils/dialog.config';
 
 @Component({
   selector: 'app-invoices',
@@ -48,13 +49,9 @@ export class Invoices implements OnInit {
 
   protected openForm(): void {
     this.ref.set(
-      this.dialogService.open(InvoiceForm, {
-        header: 'Nueva Cuenta de Cobro',
-        width: '45vw',
-        contentStyle: { 'max-height': '90vh', overflow: 'auto' },
-        baseZIndex: 10000,
-      }),
+      this.dialogService.open(InvoiceForm, defaultDialogConfig('Nueva Cuenta de Cobro')),
     );
+
     this.ref()?.onClose.subscribe(() => this.loadInvoices());
   }
 
@@ -93,26 +90,6 @@ export class Invoices implements OnInit {
           detail: 'No se pudo enviar el email',
         });
         this.sendingId.set(null);
-      },
-    });
-  }
-
-  protected markAsSent(invoice: IInvoice): void {
-    this.invoiceService.update(invoice.id, { status: 'sent' }).subscribe({
-      next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: `Cuenta #${invoice.consecutive} marcada como enviada`,
-        });
-        this.loadInvoices();
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudo actualizar el estado',
-        });
       },
     });
   }

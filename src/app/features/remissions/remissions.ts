@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { RemissionService } from '../../core/services/remission.service';
 import { RemissionForm } from './remission-form/remission-form';
 import { IRemission } from '../../shared/interfaces';
+import { defaultDialogConfig } from '../../shared/utils/dialog.config';
 
 @Component({
   selector: 'app-remissions',
@@ -47,14 +48,7 @@ export class Remissions implements OnInit {
   }
 
   protected openForm(): void {
-    this.ref.set(
-      this.dialogService.open(RemissionForm, {
-        header: 'Nueva Remisión',
-        width: '45vw',
-        contentStyle: { 'max-height': '90vh', overflow: 'auto' },
-        baseZIndex: 10000,
-      }),
-    );
+    this.ref.set(this.dialogService.open(RemissionForm, defaultDialogConfig('Nueva Remisión')));
     this.ref()?.onClose.subscribe(() => this.loadRemissions());
   }
 
@@ -93,26 +87,6 @@ export class Remissions implements OnInit {
           detail: 'No se pudo enviar el email',
         });
         this.sendingId.set(null);
-      },
-    });
-  }
-
-  protected markAsSent(remission: IRemission): void {
-    this.remissionService.update(remission.id, { status: 'sent' }).subscribe({
-      next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: `Remisión #${remission.consecutive} marcada como enviada`,
-        });
-        this.loadRemissions();
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudo actualizar el estado',
-        });
       },
     });
   }

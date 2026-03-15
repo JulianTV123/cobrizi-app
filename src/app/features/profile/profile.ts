@@ -48,7 +48,7 @@ export class Profile implements OnInit {
   private loadProfile(): void {
     this.loadingProfile.set(true);
     this.userService.getMyProfile().subscribe({
-      next: user => {
+      next: (user) => {
         this.user.set(user);
         this.form.patchValue({
           name: user.name,
@@ -75,16 +75,22 @@ export class Profile implements OnInit {
     // Solo enviar password si fue llenado
     const data = raw.password
       ? raw
-      : { name: raw.name, id_number: raw.id_number, address: raw.address, phone: raw.phone, email: raw.email };
+      : {
+          name: raw.name,
+          id_number: raw.id_number,
+          address: raw.address,
+          phone: raw.phone,
+          email: raw.email,
+        };
 
     this.userService.updateMyProfile(data).subscribe({
-      next: user => {
+      next: (user) => {
         this.user.set(user);
         this.form.patchValue({ password: '' });
         this.messageService.add({
           severity: 'success',
           summary: 'Éxito',
-          detail: 'Perfil actualizado correctamente'
+          detail: 'Perfil actualizado correctamente',
         });
         this.loading.set(false);
       },
@@ -92,7 +98,7 @@ export class Profile implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo actualizar el perfil'
+          detail: 'No se pudo actualizar el perfil',
         });
         this.loading.set(false);
       },

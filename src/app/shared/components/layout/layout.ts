@@ -8,12 +8,12 @@ import { Topbar } from '../topbar/topbar';
   standalone: true,
   imports: [RouterOutlet, Sidebar, Topbar],
   templateUrl: './layout.html',
-  styleUrl: './layout.scss'
+  styleUrl: './layout.scss',
 })
 export class Layout {
   protected readonly sidebarCollapsed = signal(false);
 
   protected toggleSidebar(): void {
-    this.sidebarCollapsed.update(v => !v);
+    this.sidebarCollapsed.update((v) => !v);
   }
 }

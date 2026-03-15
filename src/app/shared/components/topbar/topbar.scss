@@ -19,9 +19,13 @@
     color: var(--color-text-secondary);
     transition: background 0.2s;
 
-    &:hover { background-color: var(--color-surface-alt); }
+    &:hover {
+      background-color: var(--color-surface-alt);
+    }
 
-    i { font-size: 1.1rem; }
+    i {
+      font-size: 1.1rem;
+    }
   }
 
   &__right {
