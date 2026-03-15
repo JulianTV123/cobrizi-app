@@ -24,7 +24,12 @@
   </nav>
 
   <div class="sidebar__footer">
-    <a class="sidebar__nav-item" routerLink="/profile" routerLinkActive="sidebar__nav-item--active" (click)="onNavClick()">
+    <a
+      class="sidebar__nav-item"
+      routerLink="/profile"
+      routerLinkActive="sidebar__nav-item--active"
+      (click)="onNavClick()"
+    >
       <i class="pi pi-user"></i>
       @if (!collapsed()) {
         <span>Mi perfil</span>
