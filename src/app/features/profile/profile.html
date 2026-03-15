@@ -24,7 +24,6 @@
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-grid">
-
           <div class="field">
             <label for="name" class="field__label">Nombre completo *</label>
             <input pInputText id="name" formControlName="name" placeholder="Juan Pérez" />
@@ -53,7 +52,12 @@
 
           <div class="field field--full">
             <label for="address" class="field__label">Dirección</label>
-            <input pInputText id="address" formControlName="address" placeholder="Calle 123 #45-67, Bogotá" />
+            <input
+              pInputText
+              id="address"
+              formControlName="address"
+              placeholder="Calle 123 #45-67, Bogotá"
+            />
           </div>
 
           <div class="field field--full">
@@ -70,7 +74,6 @@
               styleClass="w-full"
             />
           </div>
-
         </div>
 
         <div class="form-actions">

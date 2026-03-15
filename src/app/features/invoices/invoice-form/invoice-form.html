@@ -1,6 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
   <div class="form-grid">
-
     <div class="field">
       <label class="field__label">Asociado *</label>
       <p-select
@@ -26,7 +25,6 @@
         class="w-full"
       />
     </div>
-
   </div>
 
   <!-- Items -->
@@ -37,7 +35,7 @@
       <p-select
         [ngModel]="selectedItem()"
         (ngModelChange)="selectedItem.set($event)"
-        [ngModelOptions]="{standalone: true}"
+        [ngModelOptions]="{ standalone: true }"
         [options]="items()"
         optionLabel="name"
         placeholder="Selecciona un artículo"
@@ -71,7 +69,7 @@
             <p-inputnumber
               [ngModel]="row.quantity"
               (ngModelChange)="updateRow(i, 'quantity', $event)"
-              [ngModelOptions]="{standalone: true}"
+              [ngModelOptions]="{ standalone: true }"
               [min]="1"
               [showButtons]="true"
               buttonLayout="horizontal"
@@ -82,13 +80,17 @@
             <p-inputnumber
               [ngModel]="row.unit_price"
               (ngModelChange)="updateRow(i, 'unit_price', $event)"
-              [ngModelOptions]="{standalone: true}"
+              [ngModelOptions]="{ standalone: true }"
               mode="currency"
               currency="COP"
               locale="es-CO"
               [min]="0"
             />
-            <span><strong>{{ row.quantity * row.unit_price | currency: 'COP' : 'symbol' : '1.0-0' }}</strong></span>
+            <span
+              ><strong>{{
+                row.quantity * row.unit_price | currency: 'COP' : 'symbol' : '1.0-0'
+              }}</strong></span
+            >
             <p-button
               icon="pi pi-trash"
               size="small"

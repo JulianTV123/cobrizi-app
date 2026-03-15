@@ -1,4 +1,4 @@
-import { IItem, IItemProperty } from "./item.interface";
+import { IItem, IItemProperty } from './item.interface';
 
 export interface IRemissionItemProperty {
   id: number;
@@ -33,8 +33,14 @@ export interface IRemissionRow {
   total_quantity: number;
 }
 
-export type IRemissionItemPropertyCreate = Pick<IRemissionItemProperty, 'item_property_id' | 'quantity'>;
-export type IRemissionItemCreate = Pick<IRemissionItem, 'item_id' | 'total_quantity'> & { property_quantities: IRemissionItemPropertyCreate[] };
-export type IRemissionCreate = Pick<IRemission, 'date' | 'user_associate_id'> & { items: IRemissionItemCreate[] };
+export type IRemissionItemPropertyCreate = Pick<
+  IRemissionItemProperty,
+  'item_property_id' | 'quantity'
+>;
+export type IRemissionItemCreate = Pick<IRemissionItem, 'item_id' | 'total_quantity'> & {
+  property_quantities: IRemissionItemPropertyCreate[];
+};
+export type IRemissionCreate = Pick<IRemission, 'date' | 'user_associate_id'> & {
+  items: IRemissionItemCreate[];
+};
 export type IRemissionUpdate = Partial<Pick<IRemission, 'date' | 'status'>>;
-

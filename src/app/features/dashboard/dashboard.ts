@@ -13,16 +13,9 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    DividerModule,
-    TagModule,
-    RouterLink
-  ],
+  imports: [CommonModule, CardModule, ButtonModule, DividerModule, TagModule, RouterLink],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss'
+  styleUrl: './dashboard.scss',
 })
 export class Dashboard implements OnInit {
   private readonly authService = inject(AuthService);
@@ -45,20 +38,20 @@ export class Dashboard implements OnInit {
   }
 
   private loadDashboardData(): void {
-    this.associateService.getAll().subscribe(associates => {
+    this.associateService.getAll().subscribe((associates) => {
       this.associatesCount.set(associates.length);
     });
 
-    this.invoiceService.getAll().subscribe(invoices => {
+    this.invoiceService.getAll().subscribe((invoices) => {
       this.invoicesCount.set(invoices.length);
-      this.draftInvoices.set(invoices.filter(i => i.status === 'draft').length);
-      this.sentInvoices.set(invoices.filter(i => i.status === 'sent').length);
+      this.draftInvoices.set(invoices.filter((i) => i.status === 'draft').length);
+      this.sentInvoices.set(invoices.filter((i) => i.status === 'sent').length);
     });
 
-    this.remissionService.getAll().subscribe(remissions => {
+    this.remissionService.getAll().subscribe((remissions) => {
       this.remissionsCount.set(remissions.length);
-      this.draftRemissions.set(remissions.filter(r => r.status === 'draft').length);
-      this.sentRemissions.set(remissions.filter(r => r.status === 'sent').length);
+      this.draftRemissions.set(remissions.filter((r) => r.status === 'draft').length);
+      this.sentRemissions.set(remissions.filter((r) => r.status === 'sent').length);
     });
   }
 }

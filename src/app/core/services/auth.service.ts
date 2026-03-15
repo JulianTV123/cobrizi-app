@@ -5,7 +5,6 @@ import { Observable, tap } from 'rxjs';
 import { API_ENDPOINTS } from '../../shared/constants';
 import { ILoginResponse, IUser, IUserCreate } from '../../shared/interfaces';
 
-
 // TODO: Reemplazar sessionStorage por httpOnly cookie + refresh token
 // para mayor seguridad contra ataques XSS y CSRF
 
@@ -32,11 +31,11 @@ export class AuthService {
     form.append('password', password);
 
     return this.http.post<ILoginResponse>(API_ENDPOINTS.auth.login, form).pipe(
-      tap(res => {
+      tap((res) => {
         // TODO: Migrar a httpOnly cookie
         sessionStorage.setItem('token', res.access_token);
         this._token.set(res.access_token);
-      })
+      }),
     );
   }
 

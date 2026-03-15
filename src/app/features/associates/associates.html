@@ -18,7 +18,7 @@
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} asociados"
     [rowsPerPageOptions]="[5, 10, 25]"
-    [tableStyle]="{'min-width': '50rem'}"
+    [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -72,16 +72,10 @@
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="7" class="text-center">
-          No hay asociados registrados.
-        </td>
+        <td colspan="7" class="text-center">No hay asociados registrados.</td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-<p-confirmDialog
-  header="Confirmación"
-  icon="pi pi-exclamation-triangle"
-  key="associateDialog"
-/>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle" key="associateDialog" />

@@ -44,7 +44,7 @@ export class InvoiceForm implements OnInit {
   protected readonly selectedItem = signal<IItem | null>(null);
 
   protected readonly total = computed(() =>
-    this.rows().reduce((acc, row) => acc + row.quantity * row.unit_price, 0)
+    this.rows().reduce((acc, row) => acc + row.quantity * row.unit_price, 0),
   );
 
   protected readonly form = this.fb.nonNullable.group({
@@ -53,28 +53,28 @@ export class InvoiceForm implements OnInit {
   });
 
   ngOnInit(): void {
-    this.associateService.getAll().subscribe(a => this.associates.set(a));
-    this.itemService.getAll().subscribe(i => this.items.set(i));
+    this.associateService.getAll().subscribe((a) => this.associates.set(a));
+    this.itemService.getAll().subscribe((i) => this.items.set(i));
   }
 
   protected addRow(): void {
     const item = this.selectedItem();
     if (!item) return;
 
-    const exists = this.rows().find(r => r.item.id === item.id);
+    const exists = this.rows().find((r) => r.item.id === item.id);
     if (exists) return;
 
-    this.rows.update(rows => [...rows, { item, quantity: 1, unit_price: 0 }]);
+    this.rows.update((rows) => [...rows, { item, quantity: 1, unit_price: 0 }]);
     this.selectedItem.set(null);
   }
 
   protected removeRow(index: number): void {
-    this.rows.update(rows => rows.filter((_, i) => i !== index));
+    this.rows.update((rows) => rows.filter((_, i) => i !== index));
   }
 
   protected updateRow(index: number, field: 'quantity' | 'unit_price', value: number): void {
-    this.rows.update(rows =>
-      rows.map((row, i) => i === index ? { ...row, [field]: value } : row)
+    this.rows.update((rows) =>
+      rows.map((row, i) => (i === index ? { ...row, [field]: value } : row)),
     );
   }
 
@@ -85,7 +85,7 @@ export class InvoiceForm implements OnInit {
         this.messageService.add({
           severity: 'warn',
           summary: 'Atención',
-          detail: 'Agrega al menos un artículo'
+          detail: 'Agrega al menos un artículo',
         });
       }
       return;
@@ -94,27 +94,29 @@ export class InvoiceForm implements OnInit {
     this.loading.set(true);
     const { user_associate_id, date } = this.form.getRawValue();
 
-    const items: IInvoiceItemCreate[] = this.rows().map(row => ({
+    const items: IInvoiceItemCreate[] = this.rows().map((row) => ({
       item_id: row.item.id,
       quantity: row.quantity,
       unit_price: row.unit_price,
     }));
 
-    this.invoiceService.create({
-      user_associate_id,
-      date: date instanceof Date ? date.toISOString().split('T')[0] : date,
-      items,
-    }).subscribe({
-      next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: 'Cuenta de cobro creada correctamente'
-        });
-        this.ref.close();
-      },
-      error: () => this.loading.set(false),
-    });
+    this.invoiceService
+      .create({
+        user_associate_id,
+        date: date instanceof Date ? date.toISOString().split('T')[0] : date,
+        items,
+      })
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Cuenta de cobro creada correctamente',
+          });
+          this.ref.close();
+        },
+        error: () => this.loading.set(false),
+      });
   }
 
   protected onCancel(): void {
