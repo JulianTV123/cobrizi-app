@@ -1,0 +1,39 @@
+<aside class="sidebar" [class.sidebar--collapsed]="collapsed()">
+  <div class="sidebar__brand">
+    @if (!collapsed()) {
+      <span class="sidebar__brand-text">Cobrizi</span>
+    } @else {
+      <span class="sidebar__brand-icon">CB</span>
+    }
+  </div>
+
+  <nav class="sidebar__nav">
+    @for (item of navItems; track item.route) {
+      <a
+        class="sidebar__nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="sidebar__nav-item--active"
+      >
+        <i [class]="item.icon"></i>
+        @if (!collapsed()) {
+          <span>{{ item.label }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <div class="sidebar__footer">
+    <a class="sidebar__nav-item" routerLink="/profile" routerLinkActive="sidebar__nav-item--active">
+      <i class="pi pi-user"></i>
+      @if (!collapsed()) {
+        <span>Mi perfil</span>
+      }
+    </a>
+    <button class="sidebar__nav-item sidebar__logout" (click)="logout()">
+      <i class="pi pi-sign-out"></i>
+      @if (!collapsed()) {
+        <span>Cerrar sesión</span>
+      }
+    </button>
+  </div>
+</aside>

@@ -1,0 +1,57 @@
+<div class="dashboard">
+  <header class="dashboard__header">
+    <h1>Dashboard</h1>
+    <p>Bienvenido/a, {{ userName() }}</p>
+  </header>
+
+  <div class="dashboard__stats">
+    <p-card header="Asociados" class="stat-card">
+      <div class="stat-value">{{ associatesCount() }}</div>
+      <p class="stat-label">Asociados registrados</p>
+      <a routerLink="/associates" class="stat-link">
+        Ver todos <i class="pi pi-arrow-right"></i>
+      </a>
+    </p-card>
+
+    <p-card header="Cuentas de Cobro" class="stat-card">
+      <div class="stat-value">{{ invoicesCount() }}</div>
+      <p class="stat-label">{{ invoicesCount() === 1 ? 'cuenta' : 'cuentas' }}</p>
+      <div class="stat-tags">
+        <p-tag [value]="draftInvoices().toString()" severity="info" *ngIf="draftInvoices()" />
+        <p-tag [value]="sentInvoices().toString()" severity="success" *ngIf="sentInvoices()" />
+      </div>
+      <a routerLink="/invoices" class="stat-link"> Ver todas <i class="pi pi-arrow-right"></i> </a>
+    </p-card>
+
+    <p-card header="Remisiones" class="stat-card">
+      <div class="stat-value">{{ remissionsCount() }}</div>
+      <p class="stat-label">{{ remissionsCount() === 1 ? 'remisión' : 'remisiones' }}</p>
+      <div class="stat-tags">
+        <p-tag [value]="draftRemissions().toString()" severity="info" *ngIf="draftRemissions()" />
+        <p-tag [value]="sentRemissions().toString()" severity="success" *ngIf="sentRemissions()" />
+      </div>
+      <a routerLink="/remissions" class="stat-link">
+        Ver todas <i class="pi pi-arrow-right"></i>
+      </a>
+    </p-card>
+  </div>
+
+  <div class="dashboard__actions">
+    <p-button
+      label="Nueva Cuenta de Cobro"
+      icon="pi pi-file-edit"
+      severity="primary"
+      size="large"
+      [routerLink]="'/invoices/new'"
+      class="action-btn"
+    />
+    <p-button
+      label="Nueva Remisión"
+      icon="pi pi-truck"
+      severity="secondary"
+      size="large"
+      [routerLink]="'/remissions/new'"
+      class="action-btn"
+    />
+  </div>
+</div>

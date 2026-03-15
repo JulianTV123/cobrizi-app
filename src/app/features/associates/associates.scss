@@ -1,0 +1,22 @@
+@use '../../../styles/mixins' as *;
+
+.associates {
+  height: 100%;
+  @include flex(column, stretch, flex-start);
+}
+
+.associates__header {
+  @include flex(row, center, space-between);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.actions {
+  @include flex(row, center, flex-start);
+  gap: var(--space-sm);
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: var(--space-md);
+}

@@ -1,0 +1,73 @@
+@use '../../../../styles/mixins' as *;
+
+.register-container {
+  @include flex(row, center, center);
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--space-lg);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 640px;
+  box-shadow: var(--shadow-lg);
+
+  .p-card-header {
+    text-align: center;
+    padding-bottom: var(--space-lg);
+    border-bottom: 2px solid var(--color-primary-subtle);
+  }
+
+  .p-card-content {
+    padding: var(--space-2xl);
+  }
+}
+
+.register-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.p-field {
+  label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+  }
+
+  input {
+    width: 100%;
+    padding: var(--space-md);
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--color-danger);
+    }
+  }
+}
+
+.register-links {
+  text-align: center;
+  margin-top: var(--space-xl);
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

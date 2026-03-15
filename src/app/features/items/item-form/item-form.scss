@@ -1,0 +1,55 @@
+@use '../../../../styles/mixins' as *;
+
+.form-grid {
+  @include flex(column, stretch, flex-start, var(--space-md));
+}
+
+.field {
+  @include flex(column, stretch, flex-start);
+
+  &__label {
+    margin-bottom: var(--space-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  &__hint {
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    margin-left: var(--space-xs);
+  }
+}
+
+.properties {
+  @include flex(row, center, flex-start);
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  min-height: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.property-tag {
+  @include flex(row, center, flex-start, var(--space-xs));
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-sm);
+}
+
+.property-input {
+  @include flex(row, center, flex-start, var(--space-sm));
+
+  input {
+    flex: 1;
+  }
+}
+
+.form-actions {
+  @include flex(row, center, flex-end, var(--space-md));
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}

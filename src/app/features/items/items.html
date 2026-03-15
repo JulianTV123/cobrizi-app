@@ -1,0 +1,78 @@
+<div class="items">
+  <div class="items__header">
+    <h2>Mis Artículos</h2>
+    <p-button
+      label="Nuevo Artículo"
+      icon="pi pi-plus"
+      severity="primary"
+      size="small"
+      (onClick)="openForm()"
+    />
+  </div>
+
+  <p-table
+    [value]="items()"
+    [loading]="loading()"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} artículos"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [tableStyle]="{'min-width': '40rem'}"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 5rem">Acciones</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Propiedades</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>
+          <div class="actions">
+            <p-button
+              icon="pi pi-pencil"
+              size="small"
+              severity="secondary"
+              text
+              rounded
+              pTooltip="Editar"
+              (onClick)="openForm(item)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              size="small"
+              severity="danger"
+              text
+              rounded
+              pTooltip="Eliminar"
+              (onClick)="deleteItem(item)"
+            />
+          </div>
+        </td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description || 'Sin descripción' }}</td>
+        <td>
+          <div class="tags">
+            @for (prop of item.properties; track prop.id) {
+              <p-tag [value]="prop.name" severity="secondary" />
+            }
+            @if (!item.properties.length) {
+              <span class="no-props">Sin propiedades</span>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">No hay artículos registrados.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog key="itemDialog" />

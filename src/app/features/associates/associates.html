@@ -1,0 +1,89 @@
+<div class="associates">
+  <div class="associates__header">
+    <h2>Mis Asociados</h2>
+    <p-button
+      label="Nuevo Asociado"
+      icon="pi pi-plus"
+      severity="primary"
+      size="small"
+      (onClick)="openForm()"
+    />
+  </div>
+
+  <p-table
+    [value]="associates()"
+    [loading]="loading()"
+    tableStyleClass="p-datatable-sm"
+    [scrollable]="true"
+    scrollHeight="flex"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} asociados"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [tableStyle]="{'min-width': '50rem'}"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">Acciones</th>
+        <th>Nombre</th>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Estado</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-associate>
+      <tr>
+        <td>
+          <div class="actions">
+            <p-button
+              icon="pi pi-pencil"
+              size="small"
+              severity="secondary"
+              text
+              rounded
+              pTooltip="Editar"
+              (onClick)="openForm(associate)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              size="small"
+              severity="danger"
+              text
+              rounded
+              pTooltip="Eliminar"
+              (onClick)="deleteAssociate(associate)"
+            />
+          </div>
+        </td>
+        <td>{{ associate.name }}</td>
+        <td>{{ associate.id_number }}</td>
+        <td>{{ associate.email || 'No definido' }}</td>
+        <td>{{ associate.phone || 'No definido' }}</td>
+        <td>{{ associate.address || 'No definido' }}</td>
+        <td>
+          <p-tag
+            [value]="associate.email ? 'Completo' : 'Pendiente'"
+            [severity]="associate.email ? 'success' : 'warn'"
+          />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="text-center">
+          No hay asociados registrados.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog
+  header="Confirmación"
+  icon="pi pi-exclamation-triangle"
+  key="associateDialog"
+/>

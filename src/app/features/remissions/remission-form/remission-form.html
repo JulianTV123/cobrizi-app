@@ -1,0 +1,119 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+  <div class="form-grid">
+    <div class="field">
+      <label class="field__label">Asociado *</label>
+      <p-select
+        formControlName="user_associate_id"
+        [options]="associates()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Selecciona un asociado"
+        class="w-full"
+      />
+      @if (form.get('user_associate_id')?.invalid && form.get('user_associate_id')?.touched) {
+        <small class="p-error">Selecciona un asociado</small>
+      }
+    </div>
+
+    <div class="field">
+      <label class="field__label">Fecha *</label>
+      <p-datepicker
+        formControlName="date"
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        appendTo="body"
+        class="w-full"
+      />
+    </div>
+  </div>
+
+  <!-- Selector de items -->
+  <div class="items-section">
+    <label class="field__label">Artículos *</label>
+
+    <div class="item-selector">
+      <p-select
+        [ngModel]="selectedItem()"
+        (ngModelChange)="selectedItem.set($event)"
+        [ngModelOptions]="{standalone: true}"
+        [options]="items()"
+        optionLabel="name"
+        placeholder="Selecciona un artículo"
+        class="w-full"
+      />
+      <p-button
+        icon="pi pi-plus"
+        severity="secondary"
+        size="small"
+        type="button"
+        label="Agregar"
+        [disabled]="!selectedItem()"
+        (onClick)="addRow()"
+      />
+    </div>
+
+    <!-- Rows de items con properties -->
+    @for (row of rows(); track row.item.id; let i = $index) {
+      <div class="item-card">
+        <div class="item-card__header">
+          <span class="item-card__name">{{ row.item.name }}</span>
+          <div class="item-card__meta">
+            <span class="item-card__total">Total: <strong>{{ row.total_quantity }}</strong></span>
+            <p-button
+              icon="pi pi-trash"
+              size="small"
+              severity="danger"
+              text
+              rounded
+              type="button"
+              (onClick)="removeRow(i)"
+            />
+          </div>
+        </div>
+
+        <div class="property-rows">
+          @if (!row.item.properties.length) {
+            <span class="no-props">Este artículo no tiene propiedades definidas</span>
+          }
+          @for (pr of row.propertyRows; track pr.property.id; let pi = $index) {
+            <div class="property-row">
+              <span class="property-row__name">{{ pr.property.name }}</span>
+              <p-inputnumber
+                [ngModel]="pr.quantity"
+                (ngModelChange)="updatePropertyQuantity(i, pi, $event)"
+                [ngModelOptions]="{standalone: true}"
+                [min]="0"
+                [showButtons]="true"
+                buttonLayout="horizontal"
+                decrementButtonIcon="pi pi-minus"
+                incrementButtonIcon="pi pi-plus"
+                inputStyleClass="text-center"
+              />
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="form-actions">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      outlined
+      size="small"
+      type="button"
+      (onClick)="onCancel()"
+    />
+    <p-button
+      label="Crear Remisión"
+      severity="primary"
+      size="small"
+      type="submit"
+      [loading]="loading()"
+      [disabled]="form.invalid || !rows().length"
+    />
+  </div>
+
+</form>

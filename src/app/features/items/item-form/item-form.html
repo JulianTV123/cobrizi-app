@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <div class="form-grid">
+
+    <div class="field field--full">
+      <label for="name" class="field__label">Nombre *</label>
+      <input pInputText id="name" formControlName="name" placeholder="Ej: Camiseta" />
+      @if (form.get('name')?.invalid && form.get('name')?.touched) {
+        <small class="p-error">Nombre requerido (mínimo 2 caracteres)</small>
+      }
+    </div>
+
+    <div class="field field--full">
+      <label for="description" class="field__label">Descripción</label>
+      <textarea
+        pTextarea
+        id="description"
+        formControlName="description"
+        rows="2"
+        placeholder="Descripción opcional"
+      ></textarea>
+    </div>
+
+    <!-- Propiedades -->
+    <div class="field field--full">
+      <label class="field__label">
+        Propiedades
+        <span class="field__hint">(ej: tallas, colores)</span>
+      </label>
+
+      <!-- Lista de properties -->
+      <div class="properties">
+        @if (item()) {
+          @for (prop of properties(); track prop.id) {
+            <div class="property-tag">
+              <span>{{ prop.name }}</span>
+              <p-button
+                icon="pi pi-times"
+                size="small"
+                severity="danger"
+                text
+                rounded
+                (onClick)="deleteProperty(prop)"
+              />
+            </div>
+          }
+        } @else {
+          @for (prop of localProperties(); track $index) {
+            <div class="property-tag">
+              <span>{{ prop }}</span>
+              <p-button
+                icon="pi pi-times"
+                size="small"
+                severity="danger"
+                text
+                rounded
+                (onClick)="removeLocalProperty($index)"
+              />
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Input nueva property -->
+      <div class="property-input">
+        <input
+          pInputText
+          [ngModel]="newPropertyName()"
+          (ngModelChange)="newPropertyName.set($event)"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Nueva propiedad"
+          (keydown.enter)="$event.preventDefault(); item() ? addProperty() : addLocalProperty()"
+        />
+        <p-button
+          icon="pi pi-plus"
+          severity="secondary"
+          size="small"
+          type="button"
+          [loading]="addingProperty()"
+          (onClick)="item() ? addProperty() : addLocalProperty()"
+        />
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-actions">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      outlined
+      size="small"
+      type="button"
+      (onClick)="onCancel()"
+    />
+    <p-button
+      label="Guardar"
+      severity="primary"
+      size="small"
+      type="submit"
+      [loading]="loading()"
+      [disabled]="form.invalid"
+    />
+  </div>
+</form>

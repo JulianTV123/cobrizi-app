@@ -1,0 +1,60 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/tokens' as *;
+
+.login-container {
+  @include flex(row, center, center);
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+
+  .p-card-header {
+    text-align: center;
+    padding-bottom: var(--space-lg);
+    border-bottom: 2px solid var(--color-primary-subtle);
+  }
+
+  .p-card-content {
+    padding: var(--space-2xl);
+  }
+}
+
+.p-field {
+  margin-bottom: var(--space-lg);
+
+  label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+  }
+
+  input {
+    width: 100%;
+    padding: var(--space-md);
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--color-danger);
+    }
+  }
+}
+
+.login-links {
+  text-align: center;
+  margin-top: var(--space-xl);
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

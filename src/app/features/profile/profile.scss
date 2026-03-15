@@ -1,0 +1,93 @@
+@use '../../../styles/mixins' as *;
+
+.profile {
+  @include flex(column, stretch, flex-start);
+  max-width: 700px;
+}
+
+.profile__header {
+  @include flex(row, center, space-between);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.profile__loading {
+  @include flex(row, center, center, var(--space-sm));
+  color: var(--color-text-muted);
+  padding: var(--space-xl);
+}
+
+.profile__content {
+  @include flex(column, stretch, flex-start, var(--space-lg));
+}
+
+.profile__avatar {
+  @include flex(row, center, flex-start, var(--space-lg));
+}
+
+.avatar {
+  @include flex(row, center, center);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.profile__info {
+  @include flex(column, flex-start, flex-start, var(--space-xs));
+
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  @include flex(column, stretch, flex-start);
+
+  &--full {
+    grid-column: 1 / -1;
+  }
+
+  &__label {
+    margin-bottom: var(--space-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  &__hint {
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    margin-left: var(--space-xs);
+  }
+}
+
+.form-actions {
+  @include flex(row, center, flex-end);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}

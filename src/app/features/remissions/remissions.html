@@ -1,0 +1,100 @@
+<div class="remissions">
+  <div class="remissions__header">
+    <h2>Remisiones</h2>
+    <p-button
+      label="Nueva Remisión"
+      icon="pi pi-plus"
+      severity="primary"
+      size="small"
+      (onClick)="openForm()"
+    />
+  </div>
+
+  <p-table
+    [value]="remissions()"
+    [loading]="loading()"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} remisiones"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [tableStyle]="{ 'min-width': '40rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 8rem">Acciones</th>
+        <th>#</th>
+        <th>Fecha</th>
+        <th>Items</th>
+        <th>Estado</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-remission>
+      <tr>
+        <td>
+          <div class="actions">
+            @if (remission.status === 'draft') {
+              <p-button
+                icon="pi pi-check"
+                size="small"
+                severity="success"
+                text
+                rounded
+                pTooltip="Marcar como enviada"
+                (onClick)="markAsSent(remission)"
+              />
+            }
+            <p-button
+              icon="pi pi-download"
+              size="small"
+              severity="secondary"
+              text
+              rounded
+              pTooltip="Descargar PDF"
+              [loading]="downloadingId() === remission.id"
+              (onClick)="downloadPdf(remission)"
+            />
+            <p-button
+              icon="pi pi-send"
+              size="small"
+              severity="info"
+              text
+              rounded
+              pTooltip="Enviar por email"
+              [loading]="sendingId() === remission.id"
+              (onClick)="sendByEmail(remission)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              size="small"
+              severity="danger"
+              text
+              rounded
+              pTooltip="Eliminar"
+              (onClick)="deleteRemission(remission)"
+            />
+          </div>
+        </td>
+        <td>
+          <strong>#{{ remission.consecutive }}</strong>
+        </td>
+        <td>{{ remission.date | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ remission.items.length }} artículo(s)</td>
+        <td>
+          <p-tag
+            [value]="getStatusLabel(remission.status)"
+            [severity]="getStatusSeverity(remission.status)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="text-center">No hay remisiones registradas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog key="remissionDialog" />

@@ -1,0 +1,98 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/tokens' as *;
+
+.dashboard {
+  padding: var(--space-xl);
+
+  &__header {
+    margin-bottom: var(--space-2xl);
+    text-align: center;
+
+    h1 {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-sm);
+      color: var(--color-text-primary);
+    }
+
+    p {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  &__stats {
+    @include flex(row, stretch, flex-start, var(--space-lg));
+    margin-bottom: var(--space-2xl);
+    gap: var(--space-lg);
+
+    @include respond-to(sm) {
+      @include flex(column, stretch, flex-start, var(--space-lg));
+    }
+  }
+
+  &__actions {
+    @include flex(row, center, center, var(--space-lg));
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    padding: var(--space-lg);
+    justify-content: left;
+
+    @include respond-to(sm) {
+      @include flex(column, center, center, var(--space-lg));
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+}
+
+.stat-card {
+  flex: 1;
+  max-width: 300px;
+
+  .p-card-header {
+    text-align: center;
+    padding-bottom: var(--space-md);
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+  }
+
+  .stat-label {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .stat-tags {
+    @include flex(row, center, flex-start);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .stat-link {
+    @include flex(row, center, flex-start);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    margin-top: auto;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    i {
+      font-size: 0.875rem;
+      margin-left: var(--space-xs);
+    }
+  }
+}
+
+.action-btn {
+  min-width: 200px;
+}
