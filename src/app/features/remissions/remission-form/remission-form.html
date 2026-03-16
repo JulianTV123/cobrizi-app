@@ -9,6 +9,7 @@
         optionValue="id"
         placeholder="Selecciona un asociado"
         class="w-full"
+        appendTo="body"
       />
       @if (form.get('user_associate_id')?.invalid && form.get('user_associate_id')?.touched) {
         <small class="p-error">Selecciona un asociado</small>
@@ -27,7 +28,6 @@
     </div>
   </div>
 
-  <!-- Selector de items -->
   <div class="items-section">
     <label class="field__label">Artículos *</label>
 
@@ -40,6 +40,7 @@
         optionLabel="name"
         placeholder="Selecciona un artículo"
         class="w-full"
+        appendTo="body"
       />
       <p-button
         icon="pi pi-plus"
@@ -52,15 +53,14 @@
       />
     </div>
 
-    <!-- Rows de items con properties -->
     @for (row of rows(); track row.item.id; let i = $index) {
       <div class="item-card">
         <div class="item-card__header">
           <span class="item-card__name">{{ row.item.name }}</span>
           <div class="item-card__meta">
-            <span class="item-card__total"
-              >Total: <strong>{{ row.total_quantity }}</strong></span
-            >
+            <span class="item-card__total">
+              Total: <strong>{{ row.total_quantity }}</strong>
+            </span>
             <p-button
               icon="pi pi-trash"
               size="small"
@@ -73,27 +73,60 @@
           </div>
         </div>
 
-        <div class="property-rows">
-          @if (!row.item.properties.length) {
-            <span class="no-props">Este artículo no tiene propiedades definidas</span>
-          }
-          @for (pr of row.propertyRows; track pr.property.id; let pi = $index) {
-            <div class="property-row">
-              <span class="property-row__name">{{ pr.property.name }}</span>
-              <p-inputnumber
-                [ngModel]="pr.quantity"
-                (ngModelChange)="updatePropertyQuantity(i, pi, $event)"
-                [ngModelOptions]="{ standalone: true }"
-                [min]="0"
-                [showButtons]="true"
-                buttonLayout="horizontal"
-                decrementButtonIcon="pi pi-minus"
-                incrementButtonIcon="pi pi-plus"
-                inputStyleClass="text-center"
-              />
+        @if (!row.item.properties.length) {
+          <span class="no-props">Este artículo no tiene propiedades definidas</span>
+        } @else {
+          <!-- Desktop -->
+          <div class="hidden-mobile">
+            <p-table [value]="row.propertyRows">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Propiedad</th>
+                  <th style="width: 200px">Cantidad</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-pr let-pi="rowIndex">
+                <tr>
+                  <td>{{ pr.property.name }}</td>
+                  <td>
+                    <p-inputnumber
+                      [ngModel]="pr.quantity"
+                      (ngModelChange)="updatePropertyQuantity(i, pi, $event)"
+                      [ngModelOptions]="{ standalone: true }"
+                      [min]="1"
+                      buttonLayout="horizontal"
+                      decrementButtonIcon="pi pi-minus"
+                      incrementButtonIcon="pi pi-plus"
+                      inputStyleClass="text-center"
+                      class="w-full"
+                    />
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+          <!-- Mobile -->
+          <div class="hidden-desktop">
+            <div class="property-list">
+              @for (pr of row.propertyRows; track pr.property.id; let pi = $index) {
+                <div class="property-item">
+                  <span class="property-item__name">{{ pr.property.name }}</span>
+                  <p-inputnumber
+                    [ngModel]="pr.quantity"
+                    (ngModelChange)="updatePropertyQuantity(i, pi, $event)"
+                    [ngModelOptions]="{ standalone: true }"
+                    [min]="1"
+                    buttonLayout="stacked"
+                    decrementButtonIcon="pi pi-minus"
+                    incrementButtonIcon="pi pi-plus"
+                    inputStyleClass="text-center"
+                  />
+                </div>
+              }
             </div>
-          }
-        </div>
+          </div>
+        }
       </div>
     }
   </div>
