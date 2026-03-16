@@ -9,6 +9,7 @@
         optionValue="id"
         placeholder="Selecciona un asociado"
         class="w-full"
+        appendTo="body"
       />
       @if (form.get('user_associate_id')?.invalid && form.get('user_associate_id')?.touched) {
         <small class="p-error">Selecciona un asociado</small>
@@ -40,6 +41,8 @@
         optionLabel="name"
         placeholder="Selecciona un artículo"
         class="w-full"
+        appendTo="body"
+        appendTo="body"
       />
       <p-button
         icon="pi pi-plus"
@@ -52,60 +55,115 @@
       />
     </div>
 
-    <!-- Tabla de items -->
     @if (rows().length) {
-      <div class="items-table">
-        <div class="items-table__header">
-          <span>Artículo</span>
-          <span>Cantidad</span>
-          <span>Precio unitario</span>
-          <span>Subtotal</span>
-          <span></span>
-        </div>
-
-        @for (row of rows(); track row.item.id; let i = $index) {
-          <div class="items-table__row">
-            <span>{{ row.item.name }}</span>
-            <p-inputnumber
-              [ngModel]="row.quantity"
-              (ngModelChange)="updateRow(i, 'quantity', $event)"
-              [ngModelOptions]="{ standalone: true }"
-              [min]="1"
-              [showButtons]="true"
-              buttonLayout="horizontal"
-              decrementButtonIcon="pi pi-minus"
-              incrementButtonIcon="pi pi-plus"
-              inputStyleClass="text-center"
-            />
-            <p-inputnumber
-              [ngModel]="row.unit_price"
-              (ngModelChange)="updateRow(i, 'unit_price', $event)"
-              [ngModelOptions]="{ standalone: true }"
-              mode="currency"
-              currency="COP"
-              locale="es-CO"
-              [min]="0"
-            />
-            <span
-              ><strong>{{
-                row.quantity * row.unit_price | currency: 'COP' : 'symbol' : '1.0-0'
-              }}</strong></span
-            >
-            <p-button
-              icon="pi pi-trash"
-              size="small"
-              severity="danger"
-              text
-              rounded
-              type="button"
-              (onClick)="removeRow(i)"
-            />
+      <!-- Desktop -->
+      <div class="hidden-mobile">
+        <div class="desktop-table">
+          <div class="desktop-table__header">
+            <span>Artículo</span>
+            <span>Cantidad</span>
+            <span>Precio unitario</span>
+            <span>Subtotal</span>
+            <span></span>
           </div>
-        }
+          @for (row of rows(); track row.item.id; let i = $index) {
+            <div class="desktop-table__row">
+              <span>{{ row.item.name }}</span>
+              <p-inputnumber
+                [ngModel]="row.quantity"
+                (ngModelChange)="updateRow(i, 'quantity', $event)"
+                [ngModelOptions]="{ standalone: true }"
+                [min]="1"
+                [showButtons]="false"
+                inputStyleClass="text-center"
+                class="w-full"
+              />
+              <p-inputnumber
+                [ngModel]="row.unit_price"
+                (ngModelChange)="updateRow(i, 'unit_price', $event)"
+                [ngModelOptions]="{ standalone: true }"
+                mode="currency"
+                currency="COP"
+                locale="es-CO"
+                [min]="0"
+                class="w-full"
+              />
+              <strong>{{
+                row.quantity * row.unit_price | currency: 'COP' : 'symbol' : '1.0-0'
+              }}</strong>
+              <p-button
+                icon="pi pi-trash"
+                size="small"
+                severity="danger"
+                text
+                rounded
+                type="button"
+                (onClick)="removeRow(i)"
+              />
+            </div>
+          }
+          <div class="desktop-table__footer">
+            <span>Total:</span>
+            <strong>{{ total() | currency: 'COP' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+        </div>
+      </div>
 
-        <div class="items-table__total">
-          <span>Total:</span>
-          <strong>{{ total() | currency: 'COP' : 'symbol' : '1.0-0' }}</strong>
+      <!-- Mobile -->
+      <div class="hidden-desktop">
+        <div class="mobile-table">
+          @for (row of rows(); track row.item.id; let i = $index) {
+            <div class="mobile-row">
+              <span class="mobile-row__label">Artículo</span>
+              <span>{{ row.item.name }}</span>
+            </div>
+            <div class="mobile-row">
+              <span class="mobile-row__label">Cantidad</span>
+              <p-inputnumber
+                [ngModel]="row.quantity"
+                (ngModelChange)="updateRow(i, 'quantity', $event)"
+                [ngModelOptions]="{ standalone: true }"
+                [min]="1"
+                [showButtons]="false"
+                inputStyleClass="text-center"
+                class="w-full"
+              />
+            </div>
+            <div class="mobile-row">
+              <span class="mobile-row__label">Precio unitario</span>
+              <p-inputnumber
+                [ngModel]="row.unit_price"
+                (ngModelChange)="updateRow(i, 'unit_price', $event)"
+                [ngModelOptions]="{ standalone: true }"
+                mode="currency"
+                currency="COP"
+                locale="es-CO"
+                [min]="0"
+                class="w-full"
+              />
+            </div>
+            <div class="mobile-row">
+              <span class="mobile-row__label">Subtotal</span>
+              <strong>{{
+                row.quantity * row.unit_price | currency: 'COP' : 'symbol' : '1.0-0'
+              }}</strong>
+            </div>
+            <div class="mobile-actions">
+              <p-button
+                icon="pi pi-trash"
+                size="small"
+                severity="danger"
+                text
+                rounded
+                type="button"
+                (onClick)="removeRow(i)"
+              />
+            </div>
+          }
+          <div class="mobile-total">
+            <span>Total:</span>
+            <strong>{{ total() | currency: 'COP' : 'symbol' : '1.0-0' }}</strong>
+          </div>
         </div>
       </div>
     }

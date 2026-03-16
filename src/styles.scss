@@ -4,3 +4,12 @@
 @use 'styles/mixins' as *;
 
 @import 'primeicons/primeicons.css';
+
+.p-inputnumber-input {
+  width: 100%;
+  min-width: 0;
+}
+
+.p-inputnumber {
+  width: 100%;
+}
