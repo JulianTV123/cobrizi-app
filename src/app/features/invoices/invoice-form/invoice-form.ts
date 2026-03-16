@@ -12,6 +12,7 @@ import { InvoiceService } from '../../../core/services/invoice.service';
 import { AssociateService } from '../../../core/services/associate.service';
 import { ItemService } from '../../../core/services/item.service';
 import { IAssociate, IItem, IInvoiceItemCreate, InvoiceRow } from '../../../shared/interfaces';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-invoice-form',
@@ -25,6 +26,7 @@ import { IAssociate, IItem, IInvoiceItemCreate, InvoiceRow } from '../../../shar
     SelectModule,
     DatePickerModule,
     InputNumberModule,
+    TableModule,
   ],
   templateUrl: './invoice-form.html',
   styleUrl: './invoice-form.scss',
@@ -64,7 +66,7 @@ export class InvoiceForm implements OnInit {
     const exists = this.rows().find((r) => r.item.id === item.id);
     if (exists) return;
 
-    this.rows.update((rows) => [...rows, { item, quantity: 1, unit_price: 0 }]);
+    this.rows.update((rows) => [...rows, { item, quantity: 1, unit_price: 1 }]);
     this.selectedItem.set(null);
   }
 
@@ -73,9 +75,12 @@ export class InvoiceForm implements OnInit {
   }
 
   protected updateRow(index: number, field: 'quantity' | 'unit_price', value: number): void {
-    this.rows.update((rows) =>
-      rows.map((row, i) => (i === index ? { ...row, [field]: value } : row)),
-    );
+    if (value === null || value === undefined || isNaN(value)) return;
+    this.rows.update((rows) => {
+      const updated = [...rows];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
   }
 
   protected onSubmit(): void {
@@ -117,6 +122,10 @@ export class InvoiceForm implements OnInit {
         },
         error: () => this.loading.set(false),
       });
+  }
+
+  protected getInputValue(event: Event): number {
+    return parseFloat((event.target as HTMLInputElement).value.replace(/[^0-9.]/g, ''));
   }
 
   protected onCancel(): void {

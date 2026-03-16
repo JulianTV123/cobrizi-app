@@ -18,6 +18,7 @@ import {
   IRemissionItemCreate,
   IRemissionRow,
 } from '../../../shared/interfaces';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-remission-form',
@@ -31,6 +32,7 @@ import {
     SelectModule,
     DatePickerModule,
     InputNumberModule,
+    TableModule,
   ],
   templateUrl: './remission-form.html',
   styleUrl: './remission-form.scss',

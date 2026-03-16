@@ -5,7 +5,7 @@ export const defaultDialogConfig = (
   data?: Record<string, unknown>,
 ): DynamicDialogConfig => ({
   header,
-  width: '45vw',
+  width: '55vw',
   breakpoints: {
     '960px': '75vw',
     '640px': '95vw',
